@@ -20,8 +20,9 @@ Abre `index.html` con doble clic en cualquier navegador.
 Todo está en `index.html`. Los puntos que se cambian con más frecuencia están marcados con comentarios:
 
 - **Calendario de Google**: en el apartado *Calendario*, el `data-src` del `<iframe id="cal">`. Debe ser el ID de un calendario **público** (Configuración del calendario → Integrar calendario).
-- **Actas, Cuentas y Junta Directiva**: en el apartado *La asociación*. Sustituye cada `href="#"` por el enlace de Google Drive y quita la clase `pending` (es la que los muestra atenuados). Comprueba que estén compartidos como "Cualquier persona con el enlace".
+- **Actas, Cuentas y Junta Directiva**: en el apartado *La asociación*, los `href` de esas tres tarjetas. Comprueba que estén compartidos como "Cualquier persona con el enlace".
 - **Actividades**: cada bloque es un desplegable (`<details>`). Las fotos se añaden dentro del `<div class="fotos">` de cada bloque, guardando las imágenes en `img/actividades/`.
+- **Buzón de sugerencias**: formulario anónimo del apartado *Contacta / Opina*. Usa el servicio gratuito [FormSubmit](https://formsubmit.co), que reenvía cada sugerencia a afa.arlequin@gmail.com con el asunto «sugerencias web». La primera vez que alguien envía una sugerencia, FormSubmit manda un correo de activación a esa cuenta: hay que pulsar el enlace para que empiecen a llegar.
 - **Correos de contacto**: la lista del apartado *Contacta / Opina*.
 - **Logo**: está en la carpeta `img/` (`logo.jpg` es el original; `logo-icono.png` es el árbol recortado para la cabecera y `favicon.png` el icono de la pestaña).
 - **Año del pie de página**: aparece en el `<footer>` de cada apartado.

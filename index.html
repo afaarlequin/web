@@ -55,7 +55,6 @@ a.card:hover{border-color:#d9dfe7;box-shadow:0 6px 18px rgba(31,43,42,.07);trans
 .card .body{flex:1;min-width:0}
 .card .go{color:#a5b1ad;align-self:center}
 .card .go svg.i{width:20px;height:20px}
-.card.pending{opacity:.6}
 .chip{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);border-radius:999px;padding:2px 10px}
 
 /* Actividades desplegables */
@@ -93,6 +92,20 @@ details.acc .more p{font-size:15.5px;color:var(--ink);margin:0}
 a.mail-main:hover{border-color:var(--accent);box-shadow:0 8px 22px rgba(83,105,129,.3)}
 .vocal{align-items:center}
 .vocal p{word-break:break-all}
+
+/* Buzón de sugerencias */
+.buzon{flex-direction:column;align-items:stretch;gap:12px}
+.buzon-tit strong{display:block;font-size:17px;font-weight:800}
+.buzon-tit span{display:block;font-size:15px;color:var(--muted);margin-top:3px}
+.buzon textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;resize:vertical;min-height:120px}
+.buzon textarea:focus{outline:2px solid var(--accent);outline-offset:1px;background:#fff}
+.buzon-pie{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+.estado{font-size:14px;font-weight:700;color:var(--muted);margin-right:auto}
+.estado.ok{color:#2f7d4f}.estado.error{color:#b4432f}
+.btn{background:var(--accent);color:#fff;font-weight:800;border-radius:999px;padding:10px 24px}
+.btn:hover{background:var(--accent-ink)}
+.btn:disabled{opacity:.6;cursor:default}
+.trampa{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 
 footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted)}
 
@@ -156,10 +169,10 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
         <p class="intro">Somos la <strong>Asociación de Familias de la Escuela Infantil Municipal Arlequín</strong>. Aquí encontrarás la documentación de la asociación, el calendario, nuestras actividades y la forma de contactar con nosotros.</p>
         <h2 class="label">Documentación</h2>
         <div class="grid cols3">
-          <!-- ENLACES A GOOGLE DRIVE: sustituye cada href="#" por el enlace del documento y quita la clase "pending" -->
-          <a class="card tall pending" href="#" target="_blank" rel="noopener"><span class="ico"><svg class="i"><use href="#i-file"/></svg></span><span class="body"><h3>Actas</h3><p>Actas de las asambleas y reuniones de la AFA.</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
-          <a class="card tall pending" href="#" target="_blank" rel="noopener"><span class="ico"><svg class="i"><use href="#i-euro"/></svg></span><span class="body"><h3>Cuentas</h3><p>Estado de cuentas de la asociación.</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
-          <a class="card tall pending" href="#" target="_blank" rel="noopener"><span class="ico"><svg class="i"><use href="#i-users"/></svg></span><span class="body"><h3>Junta Directiva</h3><p>Quién forma la junta directiva de la AFA.</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
+          <!-- ENLACES A GOOGLE DRIVE: deben estar compartidos como "Cualquier persona con el enlace" -->
+          <a class="card tall" href="https://drive.google.com/drive/folders/1xVG6s5wJBZk0kd5k9V_bBUR5n4L1aVi9" target="_blank" rel="noopener"><span class="ico"><svg class="i"><use href="#i-file"/></svg></span><span class="body"><h3>Actas</h3><p>Actas de las asambleas y reuniones de la AFA.</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
+          <a class="card tall" href="https://docs.google.com/spreadsheets/d/1BDJsmo2K7z5g5WgYrGYIt0t60dvq5c8RnQBI9pmubJU" target="_blank" rel="noopener"><span class="ico"><svg class="i"><use href="#i-euro"/></svg></span><span class="body"><h3>Cuentas</h3><p>Estado de cuentas de la asociación.</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
+          <a class="card tall" href="https://docs.google.com/document/d/1sFctpwZw5zn6KFCOXrKwrWB7GuDN2wWCVgaSMB8Eca4/edit?tab=t.0" target="_blank" rel="noopener"><span class="ico"><svg class="i"><use href="#i-users"/></svg></span><span class="body"><h3>Junta Directiva</h3><p>Quién forma la junta directiva de la AFA.</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
         </div>
       </div>
       <footer>© AFA Arlequín · 2026</footer>
@@ -270,6 +283,18 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
       <div class="content">
         <p class="intro">Recibimos las sugerencias y comentarios de todas las familias y valoramos vuestras aportaciones.</p>
         <a class="card mail-main" href="mailto:afa.arlequin@gmail.com"><span class="ico"><svg class="i"><use href="#i-mail"/></svg></span><span class="body"><h3>Escribe a la AFA</h3><p>afa.arlequin@gmail.com</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
+        <h2 class="label">Buzón de sugerencias</h2>
+        <!-- BUZÓN: envía cada sugerencia a afa.arlequin@gmail.com a través de FormSubmit (formsubmit.co).
+             La primera vez FormSubmit manda un correo de activación a esa dirección que hay que confirmar. -->
+        <form class="buzon card" id="buzon" action="https://formsubmit.co/afa.arlequin@gmail.com" method="POST">
+          <label for="sugerencia" class="buzon-tit"><strong>Déjanos tu sugerencia</strong><span>Es anónimo: no te pedimos nombre ni correo.</span></label>
+          <textarea id="sugerencia" name="Sugerencia" rows="5" required maxlength="3000" placeholder="Escribe aquí tu sugerencia o comentario…"></textarea>
+          <input type="hidden" name="_subject" value="sugerencias web">
+          <input type="hidden" name="_template" value="box">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" class="trampa" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="buzon-pie"><span class="estado" id="buzon-estado" role="status"></span><button type="submit" class="btn">Enviar</button></div>
+        </form>
         <h2 class="label">Vocales de cada aula</h2>
         <div class="grid cols cols3">
           <a class="card vocal" href="mailto:afa.arlequin+caracol@gmail.com"><span class="ico"><svg class="i"><use href="#i-mail"/></svg></span><span class="body"><h3>Caracol</h3><p>afa.arlequin+caracol@gmail.com</p></span></a>
@@ -355,6 +380,21 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
     });
   });
   visor.addEventListener('click', function () { visor.close(); });
+
+  // Buzón de sugerencias: envío sin salir de la página
+  var buzon = document.getElementById('buzon'), estado = document.getElementById('buzon-estado');
+  buzon.addEventListener('submit', function (e) {
+    if (!window.fetch) return; // navegadores antiguos: envío normal
+    e.preventDefault();
+    var boton = buzon.querySelector('button');
+    boton.disabled = true; estado.className = 'estado'; estado.textContent = 'Enviando…';
+    fetch(buzon.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+      method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(buzon)
+    }).then(function (r) { return r.json().then(function (d) { if (!r.ok || String(d.success) !== 'true') throw d; }); })
+      .then(function () { buzon.reset(); estado.className = 'estado ok'; estado.textContent = '¡Gracias! Hemos recibido tu sugerencia.'; })
+      .catch(function () { estado.className = 'estado error'; estado.textContent = 'No se ha podido enviar. Inténtalo de nuevo más tarde.'; })
+      .then(function () { boton.disabled = false; });
+  });
 
   var cal = document.getElementById('cal');
   cal.src = cal.getAttribute('data-src') + '&mode=' + (window.innerWidth < 700 ? 'AGENDA' : 'MONTH');
