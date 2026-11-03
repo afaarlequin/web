@@ -284,16 +284,16 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
         <p class="intro">Recibimos las sugerencias y comentarios de todas las familias y valoramos vuestras aportaciones.</p>
         <a class="card mail-main" href="mailto:afa.arlequin@gmail.com"><span class="ico"><svg class="i"><use href="#i-mail"/></svg></span><span class="body"><h3>Escribe a la AFA</h3><p>afa.arlequin@gmail.com</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
         <h2 class="label">Buzón de sugerencias</h2>
-        <!-- BUZÓN: envía cada sugerencia a afa.arlequin@gmail.com a través de FormSubmit (formsubmit.co).
-             La primera vez FormSubmit manda un correo de activación a esa dirección que hay que confirmar. -->
-        <form class="buzon card" id="buzon" action="https://formsubmit.co/afa.arlequin@gmail.com" method="POST">
+        <!-- BUZÓN: envía cada sugerencia a afa.arlequin@gmail.com a través de Web3Forms (web3forms.com).
+             La access_key es pública por diseño: solo permite enviar correos a esa dirección. -->
+        <form class="buzon card" id="buzon" action="https://api.web3forms.com/submit" method="POST">
           <label for="sugerencia" class="buzon-tit"><strong>Déjanos tu sugerencia</strong><span>Es anónimo: no te pedimos nombre ni correo.</span></label>
           <textarea id="sugerencia" name="Sugerencia" rows="5" required maxlength="3000" placeholder="Escribe aquí tu sugerencia o comentario…"></textarea>
-          <input type="hidden" name="_subject" value="sugerencias web">
-          <input type="hidden" name="_template" value="box">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="https://afaarlequin.github.io/web/#contacto">
-          <input type="text" name="_honey" class="trampa" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="access_key" value="d4f8c69b-6601-4a9b-b51f-9929544e6995">
+          <input type="hidden" name="subject" value="sugerencias web">
+          <input type="hidden" name="from_name" value="Web AFA Arlequín">
+          <input type="hidden" name="redirect" value="https://afaarlequin.github.io/web/#contacto">
+          <input type="checkbox" name="botcheck" class="trampa" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="buzon-pie"><span class="estado" id="buzon-estado" role="status"></span><button type="submit" class="btn">Enviar</button></div>
         </form>
         <h2 class="label">Vocales de cada aula</h2>
@@ -389,22 +389,15 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
     e.preventDefault();
     var boton = buzon.querySelector('button');
     boton.disabled = true; estado.className = 'estado'; estado.textContent = 'Enviando…';
-    fetch(buzon.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+    fetch(buzon.action, {
       method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(buzon)
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (d) {
-        if (r.ok && String(d.success) === 'true') {
-          buzon.reset(); estado.className = 'estado ok'; estado.textContent = '¡Gracias! Hemos recibido tu sugerencia.';
-        } else if (/activ/i.test(d.message || '')) {
-          // FormSubmit aún no está activado: ha enviado el correo de activación a la AFA
-          estado.className = 'estado error'; estado.textContent = 'El buzón está pendiente de activar. Inténtalo de nuevo en unos días.';
-        } else {
-          throw d;
-        }
+        if (!r.ok || !d.success) throw d;
+        buzon.reset(); estado.className = 'estado ok'; estado.textContent = '¡Gracias! Hemos recibido tu sugerencia.';
       });
     }).catch(function () {
-      // Si el envío en segundo plano falla, se envía el formulario de forma normal
-      estado.textContent = 'Enviando…'; HTMLFormElement.prototype.submit.call(buzon);
+      estado.className = 'estado error'; estado.textContent = 'No se ha podido enviar. Inténtalo de nuevo más tarde.';
     }).then(function () { boton.disabled = false; });
   });
 
