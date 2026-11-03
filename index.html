@@ -103,16 +103,16 @@ details.acc .more p{font-size:15.5px;color:var(--ink);margin:0}
 .cerrar:hover{background:var(--line)}
 .post-cuerpo{flex:1;overflow-y:auto;padding:18px 22px 32px;font-size:16.5px;overflow-wrap:anywhere}
 .post-cuerpo p,.post-cuerpo div{margin-top:0;margin-bottom:.8em}
-.post-cuerpo>*{max-width:760px;margin-left:auto;margin-right:auto}
-.post-cuerpo img{display:block;max-width:100%;max-height:70vh;width:auto;height:auto;border-radius:12px;margin:12px auto}
+.post-cuerpo img{display:block;width:100%;height:auto;max-height:calc(100dvh - 190px);object-fit:contain;border-radius:12px;margin:12px 0}
 .post-cuerpo a{color:var(--accent-ink);font-weight:700;text-decoration:underline}
 .post-cuerpo ul,.post-cuerpo ol{padding-left:1.3em}
 @media (min-width:700px){.post-dlg{width:calc(100vw - 48px);height:calc(100dvh - 48px)}.post-cab{padding:24px 24px 18px 32px}.post-cab h2{font-size:28px}.post-cuerpo{padding:24px 32px 40px;font-size:17.5px}}
 
 /* Información */
-.saltos{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 6px}
-.saltos button{font-size:14px;font-weight:700;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
-.saltos button:hover{color:var(--accent-ink);border-color:#d9dfe7}
+.saltos{display:flex;align-items:center;white-space:nowrap;margin:-8px 0 4px;font-size:13.5px;font-weight:700}
+.saltos button{color:var(--accent-ink);padding:6px 0}
+.saltos button:hover{text-decoration:underline}
+.saltos button+button::before{content:"·";color:#a5b1ad;margin:0 10px;display:inline-block}
 .sec{font-size:22px;font-weight:800;letter-spacing:-.01em;margin:34px 0 4px;scroll-margin-top:90px}
 .sec-intro{color:var(--muted);max-width:40em;margin:0 0 16px}
 .sec-intro strong{color:var(--ink)}
@@ -132,6 +132,7 @@ details.acc .more p{font-size:15.5px;color:var(--ink);margin:0}
 .mail-main .ico{background:rgba(255,255,255,.18);color:#fff}
 .mail-main p{color:rgba(255,255,255,.85)}
 .mail-main .go{color:rgba(255,255,255,.8)}
+.buzon+.mail-main{margin-top:14px}
 a.mail-main:hover{border-color:var(--accent);box-shadow:0 8px 22px rgba(83,105,129,.3)}
 .vocal{align-items:center}
 .vocal p{word-break:break-all}
@@ -342,7 +343,6 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
       <header class="top"><img class="logo" src="img/logo-icono.png" alt="" width="42" height="42"><h1>AFA Arlequín</h1></header>
       <div class="content">
         <p class="intro">Recibimos las sugerencias y comentarios de todas las familias y valoramos vuestras aportaciones.</p>
-        <a class="card mail-main" href="mailto:afa.arlequin@gmail.com"><span class="ico"><svg class="i"><use href="#i-mail"/></svg></span><span class="body"><h3>Escribe a la AFA</h3><p>afa.arlequin@gmail.com</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
         <h2 class="label">Buzón de sugerencias</h2>
         <!-- BUZÓN: envía cada sugerencia a afa.arlequin@gmail.com a través de Web3Forms (web3forms.com).
              La access_key es pública por diseño: solo permite enviar correos a esa dirección. -->
@@ -356,6 +356,7 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
           <input type="checkbox" name="botcheck" class="trampa" tabindex="-1" autocomplete="off" aria-hidden="true">
           <div class="buzon-pie"><span class="estado" id="buzon-estado" role="status"></span><button type="submit" class="btn">Enviar</button></div>
         </form>
+        <a class="card mail-main" href="mailto:afa.arlequin@gmail.com"><span class="ico"><svg class="i"><use href="#i-mail"/></svg></span><span class="body"><h3>Escribe a la AFA</h3><p>afa.arlequin@gmail.com</p></span><span class="go"><svg class="i"><use href="#i-chev"/></svg></span></a>
         <h2 class="label">Vocales de cada aula</h2>
         <div class="grid cols cols3">
           <a class="card vocal" href="mailto:afa.arlequin+caracol@gmail.com"><span class="ico"><svg class="i"><use href="#i-mail"/></svg></span><span class="body"><h3>Caracol</h3><p>afa.arlequin+caracol@gmail.com</p></span></a>
