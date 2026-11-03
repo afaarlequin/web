@@ -74,7 +74,7 @@ details.acc .more p{font-size:15.5px;color:var(--ink);margin:0}
 /* Visor de fotos */
 .visor{border:0;padding:0;margin:0;max-width:100vw;max-height:100dvh;width:100vw;height:100dvh;background:rgba(15,20,22,.92)}
 .visor::backdrop{background:rgba(15,20,22,.92)}
-.visor img{width:100%;height:100%;object-fit:contain;display:block}
+.visor img{width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-out}
 .visor button{position:fixed;top:calc(12px + env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:26px;line-height:1}
 @media (max-width:480px){details.acc .more{padding-left:18px}}
 
@@ -103,7 +103,7 @@ details.acc .more p{font-size:15.5px;color:var(--ink);margin:0}
 .cerrar:hover{background:var(--line)}
 .post-cuerpo{flex:1;overflow-y:auto;padding:18px 22px 32px;font-size:16.5px;overflow-wrap:anywhere}
 .post-cuerpo p,.post-cuerpo div{margin-top:0;margin-bottom:.8em}
-.post-cuerpo img{display:block;width:100%;height:auto;max-height:calc(100dvh - 190px);object-fit:contain;border-radius:12px;margin:12px 0}
+.post-cuerpo img{display:block;width:100%!important;max-width:none;cursor:zoom-in;height:auto;max-height:calc(100dvh - 190px);object-fit:contain;border-radius:12px;margin:12px 0}
 .post-cuerpo a{color:var(--accent-ink);font-weight:700;text-decoration:underline}
 .post-cuerpo ul,.post-cuerpo ol{padding-left:1.3em}
 @media (min-width:700px){.post-dlg{width:calc(100vw - 48px);height:calc(100dvh - 48px)}.post-cab{padding:24px 24px 18px 32px}.post-cab h2{font-size:28px}.post-cuerpo{padding:24px 32px 40px;font-size:17.5px}}
@@ -442,13 +442,18 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
 
   // Visor: ampliar fotos de las actividades al tocarlas
   var visor = document.getElementById('visor'), visorImg = visor.querySelector('img');
+  function abrirVisor(src, alt) {
+    visorImg.src = src; visorImg.alt = alt || '';
+    if (!visor.showModal) { window.open(src, '_blank'); return; }
+    visor.showModal();
+    history.pushState({ visor: true }, '', location.hash); // el botón «atrás» del móvil cierra la foto
+  }
+  function cerrarVisor() { if (history.state && history.state.visor) history.back(); else visor.close(); }
   document.querySelectorAll('.fotos img').forEach(function (img) {
-    img.addEventListener('click', function () {
-      visorImg.src = img.src; visorImg.alt = img.alt;
-      if (visor.showModal) visor.showModal(); else window.open(img.src, '_blank');
-    });
+    img.addEventListener('click', function () { abrirVisor(img.src, img.alt); });
   });
-  visor.addEventListener('click', function () { visor.close(); });
+  visor.addEventListener('click', cerrarVisor);
+  visor.addEventListener('cancel', function (e) { e.preventDefault(); cerrarVisor(); });
 
   // Buzón de sugerencias: envío sin salir de la página
   var buzon = document.getElementById('buzon'), estado = document.getElementById('buzon-estado');
@@ -487,7 +492,11 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
   function estadoPosts(texto) { lista.innerHTML = ''; var p = document.createElement('p'); p.className = 'posts-estado'; p.textContent = texto; lista.appendChild(p); }
 
   // Limpia el HTML de la entrada: solo etiquetas de texto, enlaces e imágenes
-  var PERMITIDAS = /^(P|DIV|SPAN|BR|B|STRONG|I|EM|U|A|IMG|UL|OL|LI|H1|H2|H3|H4|BLOCKQUOTE|TABLE|TBODY|TR|TD|TH)$/;
+  var PERMITIDAS = /^(P|DIV|SPAN|BR|B|STRONG|I|EM|U|A|IMG|UL|OL|LI|H1|H2|H3|H4|BLOCKQUOTE)$/; // tablas y demás se desenvuelven
+  // Las fotos de Blogger llevan el tamaño en la dirección (/s320/, /w400-h300/, =s320…): se pide la versión grande
+  function fotoGrande(u) {
+    return u.replace(/\/[swh]\d+(-[a-z0-9-]+)?\/(?=[^\/]+$)/i, '/s1600/').replace(/=[swh]\d+(-[a-z0-9-]+)?$/i, '=s1600');
+  }
   function limpiar(html) {
     var doc = new DOMParser().parseFromString(html, 'text/html');
     (function recorrer(nodo) {
@@ -503,7 +512,7 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
           if (!ok || /^\s*javascript:/i.test(a.value)) n.removeAttribute(a.name);
         });
         if (n.tagName === 'A') { n.target = '_blank'; n.rel = 'noopener'; }
-        if (n.tagName === 'IMG') { n.loading = 'lazy'; n.src = n.src.replace(/\/s\d+(-[a-z0-9-]+)?\//, '/s1600/'); }
+        if (n.tagName === 'IMG') { n.loading = 'lazy'; n.src = fotoGrande(n.getAttribute('src') || ''); }
         recorrer(n);
       });
     })(doc.body);
@@ -525,7 +534,11 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
   dlg.querySelector('.cerrar').addEventListener('click', cerrarPost);
   dlg.addEventListener('click', function (e) { if (e.target === dlg) cerrarPost(); });
   dlg.addEventListener('cancel', function (e) { e.preventDefault(); cerrarPost(); });
-  window.addEventListener('popstate', function () { if (dlg.open) dlg.close(); });
+  window.addEventListener('popstate', function () { if (visor.open) visor.close(); else if (dlg.open) dlg.close(); });
+  // Tocar una foto del anuncio la abre a pantalla completa
+  dlgCuerpo.addEventListener('click', function (e) {
+    if (e.target.tagName === 'IMG') { e.preventDefault(); abrirVisor(e.target.src, e.target.alt); }
+  });
 
   window.afaAnuncios = function (datos) {
     var entradas = (datos && datos.feed && datos.feed.entry) || [];
