@@ -79,10 +79,13 @@ details.acc .more p{font-size:15.5px;color:var(--ink);margin:0}
 @media (max-width:480px){details.acc .more{padding-left:18px}}
 
 /* Calendario */
-.cal{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;height:calc(100dvh - var(--tabbar) - 190px);min-height:420px}
+.cal{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;height:calc(100dvh - var(--tabbar) - 260px);min-height:380px}
 .cal iframe{display:block;width:100%;height:100%;border:0}
 .note{font-size:14px;color:var(--muted);margin-top:12px}
 .note a{color:var(--accent-ink);font-weight:700}
+.leyenda{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;padding:0}
+.leyenda a{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px;text-decoration:none}
+.leyenda .dot{width:10px;height:10px;border-radius:50%;flex:none}
 
 /* Contacto */
 .mail-main{background:var(--accent);border-color:var(--accent);color:#fff;align-items:center}
@@ -183,12 +186,20 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
       <header class="top"><img class="logo" src="img/logo-icono.png" alt="" width="42" height="42"><h1>AFA Arlequín</h1></header>
       <div class="content">
         <div class="cal">
-          <!-- CALENDARIO: calendario público de Google de afa.arlequin@gmail.com -->
+          <!-- CALENDARIO: un calendario público de Google por tipo de evento (cuenta afa.arlequin@gmail.com), cada uno con su color -->
           <!-- En móvil se muestra en modo agenda (lista) y en escritorio en modo mes; ver el script del final -->
           <iframe id="cal" title="Calendario de la AFA y la escuela" loading="lazy"
-            data-src="https://calendar.google.com/calendar/embed?src=afa.arlequin%40gmail.com&hl=es&ctz=Europe%2FMadrid&showTitle=0&showPrint=0&showTz=0&showCalendars=0&wkst=2&bgcolor=%23ffffff"></iframe>
+            data-src="https://calendar.google.com/calendar/embed?src=908dfee0d9faf3dfeaca471a233e244ad9dda1f24efebf8ee2da5d47830228e9%40group.calendar.google.com&amp;color=%237CB342&amp;src=73594c323b173dfe647c3fb0200ad4467a39e971588f853077c7ac7f74ead054%40group.calendar.google.com&amp;color=%230B8043&amp;src=e685dd15ab42f3ee7573de1a363a8b91fd1010189a0fd00c26e7aa69ad7475cf%40group.calendar.google.com&amp;color=%233F51B5&amp;src=356452b37bda2748d8a245d180473d529b9c6dd5f4215676e53a7b728dae8477%40group.calendar.google.com&amp;color=%23039BE5&amp;src=b33892ae1ff1cac1cf3d476b7035ad8e8503863a1c91b312216e47553bed4f19%40group.calendar.google.com&amp;color=%23F6BF26&amp;src=ec1ea6263bb3a3568ef33c05305dbb168506292f5197aa85e297d9ebd095bda5%40group.calendar.google.com&amp;color=%23D50000&amp;hl=es&amp;ctz=Europe%2FMadrid&amp;showTitle=0&amp;showPrint=0&amp;showTz=0&amp;showCalendars=0&amp;wkst=2&amp;bgcolor=%23ffffff"></iframe>
         </div>
-        <p class="note">Eventos de la AFA y de la escuela. <a href="https://calendar.google.com/calendar/u/0?cid=YWZhLmFybGVxdWluQGdtYWlsLmNvbQ" target="_blank" rel="noopener">Añadir a mi Google Calendar</a></p>
+        <p class="note">Eventos de la AFA y de la escuela. Pulsa un tipo para añadirlo a tu Google Calendar:</p>
+        <ul class="leyenda">
+          <li><a href="https://calendar.google.com/calendar/u/0?cid=OTA4ZGZlZTBkOWZhZjNkZmVhY2E0NzFhMjMzZTI0NGFkOWRkYTFmMjRlZmViZjhlZTJkYTVkNDc4MzAyMjhlOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener"><span class="dot" style="background:#7CB342"></span>Eventos AFA</a></li>
+          <li><a href="https://calendar.google.com/calendar/u/0?cid=NzM1OTRjMzIzYjE3M2RmZTY0N2MzZmIwMjAwYWQ0NDY3YTM5ZTk3MTU4OGY4NTMwNzdjN2FjN2Y3NGVhZDA1NEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener"><span class="dot" style="background:#0B8043"></span>Reuniones AFA</a></li>
+          <li><a href="https://calendar.google.com/calendar/u/0?cid=ZTY4NWRkMTVhYjQyZjNlZTc1NzNkZTFhMzYzYThiOTFmZDEwMTAxODlhMGZkMDBjMjZlN2FhNjlhZDc0NzVjZkBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener"><span class="dot" style="background:#3F51B5"></span>Eventos Arlequín</a></li>
+          <li><a href="https://calendar.google.com/calendar/u/0?cid=MzU2NDUyYjM3YmRhMjc0OGQ4YTI0NWQxODA0NzNkNTI5YjljNmRkNWY0MjE1Njc2ZTUzYTdiNzI4ZGFlODQ3N0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener"><span class="dot" style="background:#039BE5"></span>Salidas grupos</a></li>
+          <li><a href="https://calendar.google.com/calendar/u/0?cid=YjMzODkyYWUxZmYxY2FjMWNmM2Q0NzZiNzAzNWFkOGU4NTAzODYzYTFjOTFiMzEyMjE2ZTQ3NTUzYmVkNGYxOUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener"><span class="dot" style="background:#F6BF26"></span>Extraescolares</a></li>
+          <li><a href="https://calendar.google.com/calendar/u/0?cid=ZWMxZWE2MjYzYmIzYTM1NjhlZjMzYzA1MzA1ZGJiMTY4NTA2MjkyZjUxOTdhYTg1ZTI5N2Q5ZWJkMDk1YmRhNUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener"><span class="dot" style="background:#D50000"></span>Festivos</a></li>
+        </ul>
       </div>
       <footer>© AFA Arlequín · 2026</footer>
     </section>
