@@ -104,7 +104,7 @@ details.acc .more p{font-size:15.5px;color:var(--ink);margin:0}
 .post-cab{display:flex;align-items:flex-start;gap:12px;padding:18px 18px 14px 22px;border-bottom:1px solid var(--line)}
 .post-cab>div{flex:1;min-width:0}
 .post-cab h2{font-size:22px;font-weight:800;line-height:1.25;letter-spacing:-.01em}
-.post-fecha{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.post-cuerpo .post-fecha{font-size:14px;color:var(--muted);margin-top:24px;padding-top:14px;border-top:1px solid var(--line)}
 .cerrar{width:44px;height:44px;flex:none;border-radius:50%;background:var(--bg);font-size:26px;line-height:1;color:var(--ink)}
 .cerrar:hover{background:var(--line)}
 .post-cuerpo{flex:1;overflow-y:auto;padding:18px 22px 32px;font-size:16.5px;overflow-wrap:anywhere}
@@ -386,7 +386,7 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
 
 <dialog class="post-dlg" id="post-dlg" aria-labelledby="post-tit">
   <div class="post-hoja">
-    <div class="post-cab"><div><p class="post-fecha" id="post-fecha"></p><h2 id="post-tit"></h2></div><button type="button" class="cerrar" aria-label="Cerrar">×</button></div>
+    <div class="post-cab"><div><h2 id="post-tit"></h2></div><button type="button" class="cerrar" aria-label="Cerrar">×</button></div>
     <div class="post-cuerpo" id="post-cuerpo"></div>
   </div>
 </dialog>
@@ -491,7 +491,7 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
   var BLOG = 'https://afaarlequin.blogspot.com';
   var lista = document.getElementById('posts');
   var dlg = document.getElementById('post-dlg');
-  var dlgTit = document.getElementById('post-tit'), dlgFecha = document.getElementById('post-fecha'), dlgCuerpo = document.getElementById('post-cuerpo');
+  var dlgTit = document.getElementById('post-tit'), dlgCuerpo = document.getElementById('post-cuerpo');
   var fechaFmt = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
   function estadoPosts(texto) { lista.innerHTML = ''; var p = document.createElement('p'); p.className = 'posts-estado'; p.textContent = texto; lista.appendChild(p); }
@@ -529,8 +529,10 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
   }
 
   function abrirPost(post) {
-    dlgTit.textContent = post.titulo; dlgFecha.textContent = post.fecha;
+    dlgTit.textContent = post.titulo;
     dlgCuerpo.innerHTML = limpiar(post.html); dlgCuerpo.scrollTop = 0;
+    var pub = document.createElement('p'); pub.className = 'post-fecha';
+    pub.textContent = 'Publicado el ' + post.fecha; dlgCuerpo.appendChild(pub);
     if (!dlg.showModal) { dlg.setAttribute('open', ''); return; }
     dlg.showModal();
     history.pushState({ anuncio: true }, '', location.hash); // el botón «atrás» del móvil cierra el anuncio
@@ -562,8 +564,7 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
         var dImg = document.createElement('img'); dImg.src = fotoGrande(foto); dImg.alt = post.titulo;
         var dPie = document.createElement('span'); dPie.className = 'destacado-pie';
         var dTit = document.createElement('strong'); dTit.textContent = post.titulo;
-        var dFec = document.createElement('time'); dFec.dateTime = e.published.$t; dFec.textContent = post.fecha;
-        dPie.appendChild(dTit); dPie.appendChild(dFec);
+        dPie.appendChild(dTit);
         d.appendChild(dImg); d.appendChild(dPie);
         d.addEventListener('click', function () { abrirPost(post); });
         lista.appendChild(d);
@@ -582,8 +583,7 @@ footer{padding:24px 20px 28px;text-align:center;font-size:13px;color:var(--muted
       }
       var body = document.createElement('span'); body.className = 'body';
       var h = document.createElement('h3'); h.textContent = post.titulo;
-      var t = document.createElement('time'); t.dateTime = e.published.$t; t.textContent = post.fecha;
-      body.appendChild(h); body.appendChild(t); b.appendChild(body);
+      body.appendChild(h); b.appendChild(body);
       var go = document.createElement('span'); go.className = 'go'; go.innerHTML = '<svg class="i" aria-hidden="true"><use href="#i-chev"/></svg>';
       b.appendChild(go);
       b.addEventListener('click', function () { abrirPost(post); });
